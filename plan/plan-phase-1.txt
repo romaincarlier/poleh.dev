@@ -1,0 +1,43 @@
+Phase 1 - Fondations (module abacus-core)
+==========================================
+
+Ce qui a été fait
+-----------------
+
+Mise en place du module "abacus-core" (package composer local "reaklab/abacus-core", namespace Abacus\, dossier packages/abacus-core), installé via une repository "path" dans le composer.json racine, suivant l'architecture modulaire de Filament (https://filamentphp.com/docs/5.x/advanced/modular-architecture). Package "reaklab/poleh-core" (namespace Modules\PoleH\Core\) également scaffoldé, vide pour l'instant (ce sera la phase 2).
+
+Décision technique notable : Filament 5.9 s'installe proprement sur Laravel 13 - le risque identifié dans le plan (lara-zeus/spatie-translatable ne supportant que Filament 4) ne s'est pas confirmé : sa branche 2.x supporte Filament 5. Toute la stack tourne donc sur Filament 5, pas de repli sur Filament 4 nécessaire.
+
+Composants livrés dans abacus-core :
+
+- Concerns (Abacus\Concerns\) : HasComposedSlugs, HasParents, HasMedia, HasColor, HasCrumbs, HasSeo - portés et nettoyés depuis publier (le trait HasSeoMetadata qui n'existait pas réellement dans publier a été reconstruit ici sous le nom HasSeo, avec un objet valeur Abacus\Support\Seo\Data plutôt que du HTML brut).
+- Cascade SEO/breadcrumb à 4 niveaux (au lieu des 3 demandés, en ajoutant un niveau "override explicite" par-dessus modèle > contrôleur > site) : Abacus\Http\Controllers\Controller (classe de base), Abacus\Support\Seo\Data + Resolver, composants Blade <x-abacus::seo-tags> et <x-abacus::breadcrumbs-json-ld> (schema.org BreadcrumbList).
+- Système de Menus : modèles MenuPosition, Menu, Menu\Item (Abacus\Menu\Models\), relation many-to-many position<->menu (table pivot menu_menu_position, avec ordre), résolution de destination route > page (hook prévu, pas encore de modèle Page) > URL brute. Composant Blade par position (<x-abacus::menu position="header">) avec cache par position et invalidation automatique à chaque écriture sur Menu/Item/MenuPosition (le bug de "cache pour toujours sans invalidation" de publier est corrigé). Ressources Filament : Menu (liste/creation/edition + gestionnaire de relation "Items" avec réordonnancement drag-and-drop) et MenuPosition (page de gestion simple avec assignation multiple des menus).
+- Classes de base Filament consolidées (Abacus\Filament\Resources\BaseResource, Abacus\Filament\Forms\BaseForm, Abacus\Filament\Tables\BaseTable) - fusion des deux implémentations parallèles trouvées dans publier (app/Filament vs app/FilamentOld) en une seule. Pages de base List/Create/Edit avec les boutons "creer" et "retour a la liste" automatiques, plus navigation precedent/suivant (Abacus\Filament\Actions\Next / Previous).
+- Systeme de Blocks pour le RichEditor : Abacus\Filament\Blocks\Block (utilise le vrai mecanisme natif de Filament 5, Filament\Forms\Components\RichEditor\RichContentCustomBlock, confirme present dans le vendor), decouverte automatique via Abacus\Support\Discovery (classe generique de scan de repertoires, reutilisee aussi pour les emails previsualisables).
+- Cluster de Settings (spatie/laravel-settings + filament/spatie-laravel-settings-plugin) : classes Abacus\Settings\{General, Notice, Maintenance, Email}, commande "php artisan abacus:settings" qui insere les proprietes manquantes avec leurs valeurs par defaut pour toute classe de settings decouverte (aucune migration par classe de settings, conforme a la consigne). Pages Filament General/Notice/Maintenance dans le cluster "Settings".
+- Composant Polyglot (Abacus\Filament\Components\Polyglot) : wrap un champ receveur par langue, locales lues depuis le plugin lara-zeus/spatie-translatable ; se replie en simple Group sans selecteur des qu'il n'y a qu'une seule langue configuree (actuellement le francais seul dans config('abacus.locales')), et affiche un selecteur de langues des qu'il y en a plusieurs.
+- Composant Adresse/geocodage (Abacus\Filament\Components\Address) - entierement nouveau (rien a porter depuis publier) : champs texte (rue, numero, ville, code postal, pays via l'enum Countries) desactives apres le premier enregistrement avec un bouton de deverrouillage, carte OpenStreetMap/Leaflet avec pin deplacable, bouton "Localiser" qui geocode via l'API Nominatim (Abacus\Support\Geocoding\Client). Stockage en colonnes discretes (pas de JSON) pour permettre des requetes geographiques plus tard.
+- Enums Countries (liste ISO complete, 249 pays, portee depuis publier en corrigeant un bug present la-bas : un "use Base;" faisant reference a un trait inexistant, qui aurait provoque une erreur fatale a l'usage) et Genders (nouveau, Male/Female/Other/Undisclosed).
+- Mode maintenance : middleware Abacus\Http\Middleware\Maintenance corrige (publier avait un retour anticipe mort/inutile qui desactivait completement la fonctionnalite), vue 503 avec date de retour indicative optionnelle.
+- Notices : Abacus\Notices\Visitor (logique simplifiee par rapport a publier - un simple cookie de refus au lieu d'un UUID en cache globale qui n'etait de toute facon pas vraiment "par visiteur"), composant <x-abacus::notice>.
+- Page d'emails (Abacus\Filament\Pages\Emails) : refonte du systeme - au lieu d'une liste codee en dur, un contrat Abacus\Mail\Previewable que n'importe quel Mailable/Notification peut implementer, decouvert automatiquement. Le projet n'a encore aucun mail, donc la page affiche "aucun email previsualisable" pour l'instant - seul le mecanisme est livre. Bouton d'envoi de test conserve. Bascule globale "desactiver tous les emails sortants" (Abacus\Settings\Email) branchee sur l'evenement MessageSending.
+
+Deviation de nommage actee en cours de route
+---------------------------------------------
+
+Le style de code (zen-style.md) a ete complete en cours de session suite a des retours directs : pas d'alignement visuel sur les "=" ou "=>", "namespace" en ligne 2 (pas de ligne vide apres "<?php"), regroupement des "use" generalise (namespace propre au package en premier, plus seulement "Modules\"), et noms de classes courts + sous-dossiers plutot que des noms composes (ex : Console/Commands/Settings.php plutot que SyncSettingsCommand.php, Filament/Actions/Next.php plutot que NextAction.php). Applique retroactivement a tous les fichiers deja ecrits. Applique aussi aux ressources Filament : chaque ressource vit dans son propre sous-dossier avec une classe "Resource" (ex: Filament/Resources/Menu/Resource.php), les pages de liste s'appellent "Index" (et non "List", mot reserve en PHP).
+
+Verifications effectuees
+-------------------------
+
+- composer install propre (Filament 5.9.0, lara-zeus/spatie-translatable 2.0.1, ralphjsmit/laravel-filament-upload 1.5.4, kiritokatklian/laravel-color-palette).
+- php artisan migrate : toutes les migrations d'abacus-core passent proprement sur sqlite.
+- php artisan abacus:settings : insertion reussie, idempotent (deuxieme execution silencieuse).
+- Test de fumee (ecrit puis supprime, conformement a la consigne de ne pas garder de tests pour l'instant) confirmant que /admin, /admin/menu, /admin/menu-position, /admin/menu/create, /admin/settings/{general,notice,maintenance} et /admin/emails repondent tous 200 avec un utilisateur connecte.
+- Ajout de FilamentUser::canAccessPanel() sur App\Models\User (necessaire pour l'acces au panel en dehors de l'environnement local) et de SoftDeletes sur la table users (via une migration additive plutot qu'une edition en place, la migration originale ayant deja tourne - migrate:fresh etant explicitement interdit).
+
+A suivre (phase 2)
+-------------------
+
+Module poleh-core : modeles Institution/Institution\Category, Event/Event\Category, Post, Partner + migrations, ressources Filament associees, page d'accueil (slides, blocs, evenements a venir, dernieres actualites, partenaires, bloc d'aide), seeders (positions de menu, comptes administrateurs).

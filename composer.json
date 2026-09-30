@@ -3,15 +3,32 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
+    "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/abacus-core"
+        },
+        {
+            "type": "path",
+            "url": "packages/poleh-core"
+        },
+        {
+            "type": "composer",
+            "url": "https://satis.ralphjsmit.com"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/lara-zeus/translatable"
+        }
+    ],
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.17",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "reaklab/abacus-core": "@dev",
+        "reaklab/poleh-core": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -55,7 +72,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
@@ -84,7 +102,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "ralphjsmit/packages": true
         }
     },
     "minimum-stability": "stable",
