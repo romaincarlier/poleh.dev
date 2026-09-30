@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->string( 'slug_history' )->nullable();
             $table->decimal( 'price', 8, 2 )->nullable();
             $table->boolean( 'is_featured' )->default( false );
+            $table->boolean( 'is_poster' )->default( false );
 
             $table->timestamps();
             $table->softDeletes();

@@ -1,5 +1,6 @@
 <?php
 use Modules\PoleH\Core\Http\Controllers\Contact;
+use Modules\PoleH\Core\Http\Controllers\Event;
 use Modules\PoleH\Core\Http\Controllers\Index;
 
 use Illuminate\Support\Facades\Route;
@@ -11,4 +12,7 @@ Route::middleware( 'web' )->group( function () : void {
 
     Route::get( '/contact', [ Contact::class, 'index' ] )->name( 'contact.index' );
     Route::post( '/contact', [ Contact::class, 'store' ] )->name( 'contact.store' );
+
+    Route::get( '/agenda', Event\Index::class )->name( 'event.index' );
+    Route::get( '/agenda/{id}/{slug?}', Event\Show::class )->where( 'id', '[0-9]+' )->name( 'event.show' );
 } );

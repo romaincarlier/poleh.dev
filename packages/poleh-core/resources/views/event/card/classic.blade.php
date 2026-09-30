@@ -14,6 +14,5 @@
     <h3>{{ $event->name }}</h3>
     <p>{{ $event->display_location }}</p>
 
-    {{-- event-show is out of scope for this phase - link left as a placeholder --}}
-    <a href="#">{{ __( 'Details and registration' ) }}</a>
+    <a href="{{ route( 'event.show', $event->route_parameters() ) }}" title="{{ $event->name }}">{{ __( 'Details and registration' ) }}</a>
 </article>

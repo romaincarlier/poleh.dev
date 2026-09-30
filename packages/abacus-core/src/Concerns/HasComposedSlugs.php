@@ -54,6 +54,12 @@ trait HasComposedSlugs {
         return in_array( $slug, json_decode( $record->slug_history, true ) ?: [], true );
     }
 
+    // For route( 'x.show', $model->route_parameters() ) - a composed-slug show route needs both
+    // the id and the slug, which a bare model can't fill into a 2-parameter route on its own.
+    public function route_parameters() : array {
+        return [ 'id' => $this->id, 'slug' => $this->slug ];
+    }
+
     public function resolveRouteBinding( $value, $field = null ) : ?static {
         $field = $field ?: $this->getRouteKeyName();
 

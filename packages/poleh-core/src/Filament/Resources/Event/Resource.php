@@ -50,6 +50,8 @@ class Resource extends BaseResource {
 
                     Toggle::make( 'is_featured' )->label( __( 'Featured' ) ),
 
+                    Toggle::make( 'is_poster' )->label( __( 'Poster event' ) )->helperText( __( 'Only one event can be the poster event at a time - enabling this disables it on every other event.' ) ),
+
                     BaseForm::editor( 'excerpt', __( 'Excerpt' ) ),
 
                     BaseForm::editor( 'description', __( 'Description' ) ),

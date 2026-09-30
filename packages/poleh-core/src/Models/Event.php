@@ -18,8 +18,19 @@ class Event extends Model {
     protected $casts = [
         'event_date' => 'datetime',
         'is_featured' => 'boolean',
+        'is_poster' => 'boolean',
         'price' => 'decimal:2'
     ];
+
+    public static function boot() : void {
+        parent::boot();
+
+        static::saving( function ( self $event ) : void {
+            if ( $event->is_poster ) {
+                static::where( 'id', '!=', $event->id ?? 0 )->update( [ 'is_poster' => false ] );
+            }
+        } );
+    }
 
     public function categories() : BelongsToMany {
         return $this->belongsToMany( Category::class, 'events_events_categories', 'event_id', 'event_category_id' );
