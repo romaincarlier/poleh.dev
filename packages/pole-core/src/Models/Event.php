@@ -1,10 +1,10 @@
 <?php
-namespace Modules\PoleH\Core\Models;
+namespace Modules\Pole\Core\Models;
 
 use Abacus\Concerns\HasComposedSlugs;
 use Abacus\Concerns\HasCrumbs;
 use Abacus\Concerns\HasSeo;
-use Modules\PoleH\Core\Models\Event\Category;
+use Modules\Pole\Core\Models\Event\Category;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

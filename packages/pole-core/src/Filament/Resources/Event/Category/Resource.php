@@ -1,11 +1,11 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Event\Category;
+namespace Modules\Pole\Core\Filament\Resources\Event\Category;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Event\Category\Pages\Manage;
-use Modules\PoleH\Core\Models\Event\Category as CategoryModel;
+use Modules\Pole\Core\Filament\Resources\Event\Category\Pages\Manage;
+use Modules\Pole\Core\Models\Event\Category as CategoryModel;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;

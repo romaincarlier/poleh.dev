@@ -1,8 +1,8 @@
 <?php
-namespace Modules\PoleH\Core\Http\Controllers;
+namespace Modules\Pole\Core\Http\Controllers;
 
 use Abacus\Http\Controllers\Controller;
-use Modules\PoleH\Core\Settings\Copywriting;
+use Modules\Pole\Core\Settings\Copywriting;
 
 use Illuminate\View\View;
 
@@ -12,7 +12,7 @@ class Errors extends Controller {
     public function show() : View {
         $this->crumb( url()->current(), __( 'Page not found' ) );
 
-        return $this->view( 'poleh-core::errors.404', [
+        return $this->view( 'pole-core::errors.404', [
             'settings' => app( Copywriting::class )
         ] );
     }

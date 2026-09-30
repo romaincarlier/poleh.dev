@@ -1,13 +1,13 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Partner;
+namespace Modules\Pole\Core\Filament\Resources\Partner;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Partner\Pages\Create;
-use Modules\PoleH\Core\Filament\Resources\Partner\Pages\Edit;
-use Modules\PoleH\Core\Filament\Resources\Partner\Pages\Index;
-use Modules\PoleH\Core\Models\Partner as PartnerModel;
+use Modules\Pole\Core\Filament\Resources\Partner\Pages\Create;
+use Modules\Pole\Core\Filament\Resources\Partner\Pages\Edit;
+use Modules\Pole\Core\Filament\Resources\Partner\Pages\Index;
+use Modules\Pole\Core\Models\Partner as PartnerModel;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;

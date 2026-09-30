@@ -1,7 +1,7 @@
 <?php
 use Abacus\Http\Exceptions\Expired;
 use Abacus\Http\Middleware\Maintenance;
-use Modules\PoleH\Core\Http\Controllers\Errors;
+use Modules\Pole\Core\Http\Controllers\Errors;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

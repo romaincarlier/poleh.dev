@@ -12,7 +12,7 @@
         },
         {
             "type": "path",
-            "url": "packages/poleh-core"
+            "url": "packages/pole-core"
         },
         {
             "type": "composer",
@@ -28,7 +28,7 @@
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "reaklab/abacus-core": "@dev",
-        "reaklab/poleh-core": "@dev"
+        "reaklab/pole-core": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

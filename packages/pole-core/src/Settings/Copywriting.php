@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\Settings;
+namespace Modules\Pole\Core\Settings;
 
 use Abacus\Settings\Settings;
 
@@ -14,8 +14,11 @@ class Copywriting extends Settings {
     public ?string $content_image = null;
     public ?string $content_image_mobile = null;
 
+    public array $lexicon_title = [];
+    public array $lexicon_content = [];
+
     public static function group() : string {
-        return 'poleh_core_copywriting';
+        return 'pole_core_copywriting';
     }
 
     public static function defaults() : array {
@@ -27,7 +30,9 @@ class Copywriting extends Settings {
             'content_title' => [],
             'content_content' => [],
             'content_image' => null,
-            'content_image_mobile' => null
+            'content_image_mobile' => null,
+            'lexicon_title' => [],
+            'lexicon_content' => []
         ];
     }
 }

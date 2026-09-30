@@ -1,11 +1,11 @@
 <?php
-namespace Modules\PoleH\Core\Models;
+namespace Modules\Pole\Core\Models;
 
 use Abacus\Concerns\HasComposedSlugs;
 use Abacus\Concerns\HasCrumbs;
 use Abacus\Concerns\HasMedia;
 use Abacus\Concerns\HasSeo;
-use Modules\PoleH\Core\Models\Post\Category;
+use Modules\Pole\Core\Models\Post\Category;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

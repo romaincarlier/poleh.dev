@@ -1,7 +1,7 @@
 <?php
-namespace Modules\PoleH\Core\Models\Event;
+namespace Modules\Pole\Core\Models\Event;
 
-use Modules\PoleH\Core\Models\Event;
+use Modules\Pole\Core\Models\Event;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

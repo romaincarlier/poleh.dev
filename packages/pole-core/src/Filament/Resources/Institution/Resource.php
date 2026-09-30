@@ -1,14 +1,14 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Institution;
+namespace Modules\Pole\Core\Filament\Resources\Institution;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Institution\Pages\Create;
-use Modules\PoleH\Core\Filament\Resources\Institution\Pages\Edit;
-use Modules\PoleH\Core\Filament\Resources\Institution\Pages\Index;
-use Modules\PoleH\Core\Models\Institution as InstitutionModel;
-use Modules\PoleH\Core\Models\Institution\Category;
+use Modules\Pole\Core\Filament\Resources\Institution\Pages\Create;
+use Modules\Pole\Core\Filament\Resources\Institution\Pages\Edit;
+use Modules\Pole\Core\Filament\Resources\Institution\Pages\Index;
+use Modules\Pole\Core\Models\Institution as InstitutionModel;
+use Modules\Pole\Core\Models\Institution\Category;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

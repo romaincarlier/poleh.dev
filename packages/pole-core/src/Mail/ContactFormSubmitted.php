@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\Mail;
+namespace Modules\Pole\Core\Mail;
 
 use Abacus\Mail\Previewable;
 
@@ -50,6 +50,6 @@ class ContactFormSubmitted extends Mailable implements Previewable {
     }
 
     public static function markdown_view( string $recipient ) : string {
-        return 'poleh-core::mail.contact.administrator';
+        return 'pole-core::mail.contact.administrator';
     }
 }

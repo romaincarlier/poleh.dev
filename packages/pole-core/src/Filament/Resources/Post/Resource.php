@@ -1,13 +1,13 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Post;
+namespace Modules\Pole\Core\Filament\Resources\Post;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Post\Pages\Create;
-use Modules\PoleH\Core\Filament\Resources\Post\Pages\Edit;
-use Modules\PoleH\Core\Filament\Resources\Post\Pages\Index;
-use Modules\PoleH\Core\Models\Post as PostModel;
+use Modules\Pole\Core\Filament\Resources\Post\Pages\Create;
+use Modules\Pole\Core\Filament\Resources\Post\Pages\Edit;
+use Modules\Pole\Core\Filament\Resources\Post\Pages\Index;
+use Modules\Pole\Core\Models\Post as PostModel;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

@@ -1,7 +1,7 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Post\Category\Pages;
+namespace Modules\Pole\Core\Filament\Resources\Post\Category\Pages;
 
-use Modules\PoleH\Core\Filament\Resources\Post\Category\Resource;
+use Modules\Pole\Core\Filament\Resources\Post\Category\Resource;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;

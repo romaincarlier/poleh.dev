@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\View\Components;
+namespace Modules\Pole\Core\View\Components;
 
 use Illuminate\View\Component;
 
@@ -13,6 +13,6 @@ class Map extends Component {
     ) {}
 
     public function render() {
-        return view( 'poleh-core::components.map' );
+        return view( 'pole-core::components.map' );
     }
 }

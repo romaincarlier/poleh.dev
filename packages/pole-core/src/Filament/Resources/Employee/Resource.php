@@ -1,10 +1,10 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Employee;
+namespace Modules\Pole\Core\Filament\Resources\Employee;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
-use Modules\PoleH\Core\Filament\Resources\Employee\Pages\Manage;
-use Modules\PoleH\Core\Models\Employee as EmployeeModel;
+use Modules\Pole\Core\Filament\Resources\Employee\Pages\Manage;
+use Modules\Pole\Core\Models\Employee as EmployeeModel;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;

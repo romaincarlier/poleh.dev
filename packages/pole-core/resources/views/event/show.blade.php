@@ -1,4 +1,4 @@
-@extends( 'poleh-core::layouts.website' )
+@extends( 'pole-core::layouts.website' )
 
 @section( 'content' )
     @php
@@ -64,7 +64,7 @@
             <h2>{{ __( 'Other upcoming events' ) }}</h2>
 
             @foreach ( $next_events as $next_event )
-                @include( 'poleh-core::event.card.classic', [ 'event' => $next_event ] )
+                @include( 'pole-core::event.card.classic', [ 'event' => $next_event ] )
             @endforeach
         </section>
     @endif
@@ -74,11 +74,11 @@
             <h2>{{ __( 'Latest news' ) }}</h2>
 
             @foreach ( $latest_posts as $post )
-                @include( 'poleh-core::post.card.classic', [ 'post' => $post ] )
+                @include( 'pole-core::post.card.classic', [ 'post' => $post ] )
             @endforeach
         </section>
     @endif
 
-    <x-poleh-core::partners.listing />
-    <x-poleh-core::call.help />
+    <x-pole-core::partners.listing />
+    <x-pole-core::call.help />
 @endsection

@@ -1,8 +1,8 @@
 <?php
-namespace Modules\PoleH\Core\Http\Controllers\Event;
+namespace Modules\Pole\Core\Http\Controllers\Event;
 
 use Abacus\Http\Controllers\Controller;
-use Modules\PoleH\Core\Models\Event;
+use Modules\Pole\Core\Models\Event;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
@@ -15,7 +15,7 @@ class Index extends Controller {
 
         $poster = Event::where( 'is_poster', true )->first();
 
-        return $this->view( 'poleh-core::event.index', [
+        return $this->view( 'pole-core::event.index', [
             'poster' => $poster,
             'events' => $this->upcoming_events( $poster )
         ] );

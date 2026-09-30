@@ -1,12 +1,12 @@
 <?php
-namespace Modules\PoleH\Core\View\Components\Partners;
+namespace Modules\Pole\Core\View\Components\Partners;
 
-use Modules\PoleH\Core\Models\Partner;
+use Modules\Pole\Core\Models\Partner;
 
 use Illuminate\View\Component;
 
 // PHP reserves "List" as a class name, hence "Listing" here - matches plan.txt's "Partners\List"
-// (partners-list) in intent, invoked as <x-poleh-core::partners.listing />.
+// (partners-list) in intent, invoked as <x-pole-core::partners.listing />.
 class Listing extends Component {
     public $partners;
 
@@ -15,6 +15,6 @@ class Listing extends Component {
     }
 
     public function render() {
-        return view( 'poleh-core::components.partners.listing' );
+        return view( 'pole-core::components.partners.listing' );
     }
 }

@@ -1,7 +1,7 @@
 <?php
-use Modules\PoleH\Core\Http\Controllers\Contact;
-use Modules\PoleH\Core\Http\Controllers\Event;
-use Modules\PoleH\Core\Http\Controllers\Index;
+use Modules\Pole\Core\Http\Controllers\Contact;
+use Modules\Pole\Core\Http\Controllers\Event;
+use Modules\Pole\Core\Http\Controllers\Index;
 
 use Illuminate\Support\Facades\Route;
 

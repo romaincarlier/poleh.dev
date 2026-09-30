@@ -1,4 +1,4 @@
-@extends( 'poleh-core::layouts.website' )
+@extends( 'pole-core::layouts.website' )
 
 @section( 'content' )
     @php
@@ -26,7 +26,7 @@
         @endif
     </section>
 
-    <x-poleh-core::categories.portals />
-    <x-poleh-core::partners.listing />
-    <x-poleh-core::call.help />
+    <x-pole-core::categories.portals />
+    <x-pole-core::partners.listing />
+    <x-pole-core::call.help />
 @endsection

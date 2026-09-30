@@ -1,7 +1,7 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Employee\Pages;
+namespace Modules\Pole\Core\Filament\Resources\Employee\Pages;
 
-use Modules\PoleH\Core\Filament\Resources\Employee\Resource;
+use Modules\Pole\Core\Filament\Resources\Employee\Resource;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;

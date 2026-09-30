@@ -20,7 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 use Abacus\AbacusPlugin;
-use Modules\PoleH\Core\PolehCorePlugin;
+use Modules\Pole\Core\PoleCorePlugin;
 
 class AdminPanelProvider extends PanelProvider {
     public function panel( Panel $panel ) : Panel {
@@ -44,7 +44,7 @@ class AdminPanelProvider extends PanelProvider {
             ] )
             ->plugins( [
                 AbacusPlugin::make(),
-                PolehCorePlugin::make()
+                PoleCorePlugin::make()
             ] )
             ->middleware( [
                 EncryptCookies::class,

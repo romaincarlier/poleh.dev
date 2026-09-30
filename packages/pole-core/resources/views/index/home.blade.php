@@ -1,4 +1,4 @@
-@extends( 'poleh-core::layouts.website' )
+@extends( 'pole-core::layouts.website' )
 
 @section( 'content' )
     @php
@@ -30,7 +30,7 @@
         @endforeach
     </section>
 
-    <x-poleh-core::categories.portals />
+    <x-pole-core::categories.portals />
 
     {{-- #plustardjeserai teaser, hardcoded --}}
     <section style="border: 4px solid #22c55e;">
@@ -64,7 +64,7 @@
         <h2>{{ __( 'Upcoming events' ) }}</h2>
 
         @forelse ( $upcoming_events as $event )
-            @include( 'poleh-core::event.card.classic', [ 'event' => $event ] )
+            @include( 'pole-core::event.card.classic', [ 'event' => $event ] )
         @empty
             <p>{{ __( 'No upcoming events at the moment.' ) }}</p>
         @endforelse
@@ -75,13 +75,13 @@
         <h2>{{ __( 'Latest news' ) }}</h2>
 
         @forelse ( $latest_posts as $post )
-            @include( 'poleh-core::post.card.classic', [ 'post' => $post ] )
+            @include( 'pole-core::post.card.classic', [ 'post' => $post ] )
         @empty
             <p>{{ __( 'No posts published yet.' ) }}</p>
         @endforelse
     </section>
 
-    <x-poleh-core::partners.listing />
+    <x-pole-core::partners.listing />
 
-    <x-poleh-core::call.help />
+    <x-pole-core::call.help />
 @endsection

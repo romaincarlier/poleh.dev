@@ -1,12 +1,12 @@
 <?php
-namespace Modules\PoleH\Core\Database\Seeders;
+namespace Modules\Pole\Core\Database\Seeders;
 
 use Abacus\Menu\Models\Menu;
 use Abacus\Menu\Models\MenuPosition;
 
 use Illuminate\Database\Seeder;
 
-class PolehCoreSeeder extends Seeder {
+class PoleCoreSeeder extends Seeder {
     public function run() : void {
         foreach ( [
             [ 'name' => 'Prelude', 'slug' => 'prelude', 'order' => 1 ],

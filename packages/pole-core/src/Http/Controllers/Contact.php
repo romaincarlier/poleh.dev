@@ -1,11 +1,11 @@
 <?php
-namespace Modules\PoleH\Core\Http\Controllers;
+namespace Modules\Pole\Core\Http\Controllers;
 
 use Abacus\Http\Controllers\Controller;
 use Abacus\Settings\Email;
 use Abacus\Settings\General;
-use Modules\PoleH\Core\Mail\ContactFormSubmitted;
-use Modules\PoleH\Core\Models\Employee;
+use Modules\Pole\Core\Mail\ContactFormSubmitted;
+use Modules\Pole\Core\Models\Employee;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class Contact extends Controller {
     public function index() : View {
         $this->crumb( route( 'contact.index' ), __( 'Contact us' ) );
 
-        return $this->view( 'poleh-core::contact.index', [
+        return $this->view( 'pole-core::contact.index', [
             'employees' => Employee::orderBy( 'order' )->get()
         ] );
     }

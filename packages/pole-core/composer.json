@@ -1,11 +1,11 @@
 {
-    "name": "reaklab/poleh-core",
+    "name": "reaklab/pole-core",
     "description": "Pole hainuyer - core content module (home page, institutions, events, posts, partners)",
     "type": "library",
     "license": "proprietary",
     "autoload": {
         "psr-4": {
-            "Modules\\PoleH\\Core\\": "src/"
+            "Modules\\Pole\\Core\\": "src/"
         }
     },
     "require": {

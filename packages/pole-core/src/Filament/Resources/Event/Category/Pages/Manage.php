@@ -1,7 +1,7 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Event\Category\Pages;
+namespace Modules\Pole\Core\Filament\Resources\Event\Category\Pages;
 
-use Modules\PoleH\Core\Filament\Resources\Event\Category\Resource;
+use Modules\Pole\Core\Filament\Resources\Event\Category\Resource;
 
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;

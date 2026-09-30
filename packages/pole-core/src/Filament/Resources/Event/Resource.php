@@ -1,13 +1,13 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Event;
+namespace Modules\Pole\Core\Filament\Resources\Event;
 
 use Abacus\Filament\Forms\BaseForm;
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Event\Pages\Create;
-use Modules\PoleH\Core\Filament\Resources\Event\Pages\Edit;
-use Modules\PoleH\Core\Filament\Resources\Event\Pages\Index;
-use Modules\PoleH\Core\Models\Event as EventModel;
+use Modules\Pole\Core\Filament\Resources\Event\Pages\Create;
+use Modules\Pole\Core\Filament\Resources\Event\Pages\Edit;
+use Modules\Pole\Core\Filament\Resources\Event\Pages\Index;
+use Modules\Pole\Core\Models\Event as EventModel;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;

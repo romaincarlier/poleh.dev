@@ -1,9 +1,9 @@
 <?php
-namespace Modules\PoleH\Core\Http\Controllers\Event;
+namespace Modules\Pole\Core\Http\Controllers\Event;
 
 use Abacus\Http\Controllers\Controller;
-use Modules\PoleH\Core\Models\Event;
-use Modules\PoleH\Core\Models\Post;
+use Modules\Pole\Core\Models\Event;
+use Modules\Pole\Core\Models\Post;
 
 use Illuminate\View\View;
 
@@ -15,7 +15,7 @@ class Show extends Controller {
         $this->crumb( route( 'event.index' ), __( 'Agenda' ) );
         $this->crumb( route( 'event.show', $event->route_parameters() ), $event->crumb_title() );
 
-        return $this->view( 'poleh-core::event.show', [
+        return $this->view( 'pole-core::event.show', [
             'event' => $event,
             'next_events' => Event::where( 'id', '!=', $event->id )
                 ->where( 'event_date', '>=', now() )

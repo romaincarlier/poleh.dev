@@ -1,9 +1,9 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Clusters\Settings\Pages;
+namespace Modules\Pole\Core\Filament\Clusters\Settings\Pages;
 
 use Abacus\Filament\Clusters\Settings as SettingsCluster;
 use Abacus\Filament\Forms\BaseForm;
-use Modules\PoleH\Core\Settings\Copywriting as CopywritingSettings;
+use Modules\Pole\Core\Settings\Copywriting as CopywritingSettings;
 
 use Filament\Pages\SettingsPage;
 use Filament\Schemas\Components\Section;
@@ -39,7 +39,14 @@ class Copywriting extends SettingsPage {
                     BaseForm::polyglot_editor( 'content_content', __( 'Content' ) ),
                     BaseForm::uploader( 'content_image' )->label( __( 'Header image' ) )->image()->directory( 'settings/copywriting' ),
                     BaseForm::uploader( 'content_image_mobile' )->label( __( 'Header image (mobile)' ) )->helperText( __( 'Falls back to the header image when left empty.' ) )->image()->directory( 'settings/copywriting' )
-                ] )->columns( 2 )
+                ] )->columns( 2 ),
+
+            Section::make( __( 'Lexicon page' ) )
+                ->description( __( 'Displayed at the top of the definitions/lexicon page.' ) )
+                ->schema( [
+                    BaseForm::polyglot_input( 'lexicon_title', __( 'Title' ) ),
+                    BaseForm::polyglot_editor( 'lexicon_content', __( 'Content' ) )
+                ] )
         ] );
     }
 }

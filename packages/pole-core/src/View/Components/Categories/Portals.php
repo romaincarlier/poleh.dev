@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\View\Components\Categories;
+namespace Modules\Pole\Core\View\Components\Categories;
 
 use Illuminate\View\Component;
 
@@ -21,6 +21,6 @@ class Portals extends Component {
     }
 
     public function render() {
-        return view( 'poleh-core::components.categories.portals' );
+        return view( 'pole-core::components.categories.portals' );
     }
 }

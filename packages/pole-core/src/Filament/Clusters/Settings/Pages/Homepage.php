@@ -1,9 +1,9 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Clusters\Settings\Pages;
+namespace Modules\Pole\Core\Filament\Clusters\Settings\Pages;
 
 use Abacus\Filament\Clusters\Settings as SettingsCluster;
 use Abacus\Filament\Forms\BaseForm;
-use Modules\PoleH\Core\Settings\Homepage as HomepageSettings;
+use Modules\Pole\Core\Settings\Homepage as HomepageSettings;
 
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;

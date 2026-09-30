@@ -4,5 +4,5 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Filament\AdminPanelProvider::class,
     Abacus\AbacusServiceProvider::class,
-    Modules\PoleH\Core\PolehCoreServiceProvider::class,
+    Modules\Pole\Core\PoleCoreServiceProvider::class,
 ];

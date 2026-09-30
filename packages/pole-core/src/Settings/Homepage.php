@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\Settings;
+namespace Modules\Pole\Core\Settings;
 
 use Abacus\Settings\Settings;
 
@@ -10,7 +10,7 @@ class Homepage extends Settings {
     public array $postlude = [];
 
     public static function group() : string {
-        return 'poleh_core_homepage';
+        return 'pole_core_homepage';
     }
 
     public static function defaults() : array {

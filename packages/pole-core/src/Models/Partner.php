@@ -1,5 +1,5 @@
 <?php
-namespace Modules\PoleH\Core\Models;
+namespace Modules\Pole\Core\Models;
 
 use Abacus\Concerns\HasComposedSlugs;
 

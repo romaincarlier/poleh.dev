@@ -1,10 +1,10 @@
 <?php
-namespace Modules\PoleH\Core\Models\Institution;
+namespace Modules\Pole\Core\Models\Institution;
 
 use Abacus\Concerns\HasComposedSlugs;
 use Abacus\Concerns\HasCrumbs;
 use Abacus\Concerns\HasParents;
-use Modules\PoleH\Core\Models\Institution;
+use Modules\Pole\Core\Models\Institution;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

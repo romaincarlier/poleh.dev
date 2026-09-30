@@ -1,7 +1,7 @@
 <?php
-namespace Modules\PoleH\Core\Models\Post;
+namespace Modules\Pole\Core\Models\Post;
 
-use Modules\PoleH\Core\Models\Post;
+use Modules\Pole\Core\Models\Post;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

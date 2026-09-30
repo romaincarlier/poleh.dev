@@ -1,4 +1,4 @@
-@extends( 'poleh-core::layouts.website' )
+@extends( 'pole-core::layouts.website' )
 
 @section( 'content' )
     @php
@@ -61,9 +61,9 @@
     <section style="border: 4px solid #0ea5e9;">
         <h2>{{ __( 'Access' ) }}</h2>
         <p>{{ __( 'Avenue Frere Orban 9, 7000 Mons, Belgium' ) }}</p>
-        <x-poleh-core::map />
+        <x-pole-core::map />
     </section>
 
-    <x-poleh-core::partners.listing />
-    <x-poleh-core::call.help />
+    <x-pole-core::partners.listing />
+    <x-pole-core::call.help />
 @endsection

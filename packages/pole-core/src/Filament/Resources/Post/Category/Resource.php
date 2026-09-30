@@ -1,10 +1,10 @@
 <?php
-namespace Modules\PoleH\Core\Filament\Resources\Post\Category;
+namespace Modules\Pole\Core\Filament\Resources\Post\Category;
 
 use Abacus\Filament\Resources\BaseResource;
 use Abacus\Filament\Tables\BaseTable;
-use Modules\PoleH\Core\Filament\Resources\Post\Category\Pages\Manage;
-use Modules\PoleH\Core\Models\Post\Category as CategoryModel;
+use Modules\Pole\Core\Filament\Resources\Post\Category\Pages\Manage;
+use Modules\Pole\Core\Models\Post\Category as CategoryModel;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
