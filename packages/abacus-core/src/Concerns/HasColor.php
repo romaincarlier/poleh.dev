@@ -4,8 +4,6 @@ namespace Abacus\Concerns;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
-use Kiritokatklian\LaravelColorPalette\Facades\ColorPalette as Palette;
-
 /**
  * Expects the consuming model to also use HasMedia (for media_source()/media()) - any model
  * that can resolve its own image, local path preferred, works.
@@ -23,9 +21,23 @@ trait HasColor {
         }
 
         $source = method_exists( $this, 'media_source' ) ? ( $this->media_source() ?? $this->media() ) : $this->media();
-        $value = Palette::getColor( $source );
+        $value = static::extract_dominant_color( $source );
         Cache::forever( $key, $value );
 
         return $value;
+    }
+
+    protected static function extract_dominant_color( string $source ) : string {
+        $contents = @file_get_contents( $source );
+        $image = $contents ? @imagecreatefromstring( $contents ) : false;
+
+        if ( ! $image ) {
+            return '#000000';
+        }
+
+        $resized = imagescale( $image, 1, 1 );
+        $rgb = imagecolorsforindex( $resized, imagecolorat( $resized, 0, 0 ) );
+
+        return sprintf( '#%02x%02x%02x', $rgb['red'], $rgb['green'], $rgb['blue'] );
     }
 }

@@ -15,7 +15,6 @@
         "spatie/laravel-settings": "^3.4",
         "spatie/laravel-translatable": "^6.11",
         "lara-zeus/spatie-translatable": "^2.0",
-        "ralphjsmit/laravel-filament-upload": "^1.0",
-        "kiritokatklian/laravel-color-palette": "^4.0"
+        "ralphjsmit/laravel-filament-upload": "^1.0"
     }
 }

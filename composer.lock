@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01868cbcda94a50b12fa0800b1d78bb1",
+    "content-hash": "c27cf0838673ce9e948158fbf5524014",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5768,12 +5768,12 @@
             }
         },
         {
-            "name": "reaklab/poleh-core",
+            "name": "reaklab/pole-core",
             "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "packages/poleh-core",
-                "reference": "a2c641fa7aadd52c872e3f76ea9d827f6f57838c"
+                "url": "packages/pole-core",
+                "reference": "7503a0c8ad4c483f68f5c68017d4940328d71ecf"
             },
             "require": {
                 "php": "^8.3",
@@ -5782,7 +5782,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Modules\\PoleH\\Core\\": "src/"
+                    "Modules\\Pole\\Core\\": "src/"
                 }
             },
             "license": [
@@ -13232,7 +13232,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "reaklab/abacus-core": 20,
-        "reaklab/poleh-core": 20
+        "reaklab/pole-core": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
