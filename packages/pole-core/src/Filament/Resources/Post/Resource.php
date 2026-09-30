@@ -9,6 +9,7 @@ use Modules\Pole\Core\Filament\Resources\Post\Pages\Edit;
 use Modules\Pole\Core\Filament\Resources\Post\Pages\Index;
 use Modules\Pole\Core\Models\Post as PostModel;
 
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -44,9 +45,22 @@ class Resource extends BaseResource {
                         ->preload()
                         ->searchable(),
 
+                    Select::make( 'tags' )
+                        ->label( __( 'Tags' ) )
+                        ->relationship( 'tags', 'name' )
+                        ->multiple()
+                        ->preload()
+                        ->searchable()
+                        ->createOptionForm( [
+                            TextInput::make( 'name' )->label( __( 'Name' ) )->required()->maxLength( 255 ),
+                            TextInput::make( 'slug' )->label( __( 'Slug' ) )->required()->maxLength( 255 )
+                        ] ),
+
                     BaseForm::uploader( 'media' )->label( __( 'Image' ) )->image()->directory( 'posts' ),
 
                     Toggle::make( 'is_published' )->label( __( 'Published' ) )->default( false ),
+
+                    DateTimePicker::make( 'published_at' )->label( __( 'Publication date' ) )->helperText( __( 'Falls back to the creation date when left empty.' ) ),
 
                     BaseForm::editor( 'excerpt', __( 'Excerpt' ) ),
 

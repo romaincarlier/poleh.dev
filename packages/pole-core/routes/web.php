@@ -5,6 +5,7 @@ use Modules\Pole\Core\Http\Controllers\Faq;
 use Modules\Pole\Core\Http\Controllers\Index;
 use Modules\Pole\Core\Http\Controllers\Lexicon;
 use Modules\Pole\Core\Http\Controllers\Partner;
+use Modules\Pole\Core\Http\Controllers\Post;
 
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,7 @@ Route::middleware( 'web' )->group( function () : void {
     Route::get( '/faq/{glossary}', Faq\Show::class )->name( 'faq.show' );
 
     Route::get( '/partners', Partner\Index::class )->name( 'partner.index' );
+
+    Route::get( '/actualites', Post\Index::class )->name( 'post.index' );
+    Route::get( '/actualites/{id}/{slug?}', Post\Show::class )->where( 'id', '[0-9]+' )->name( 'post.show' );
 } );
