@@ -56,11 +56,10 @@ class Emails extends Page {
     }
 
     public static function preview( string $class, string $recipient ) : string {
-        return ( new MailMessage() )
+        return (string) ( new MailMessage() )
             ->subject( __( 'Test email' ) )
             ->markdown( $class::markdown_view( $recipient ), $class::preview_variables( $recipient ) )
-            ->render()
-            ->toString();
+            ->render();
     }
 
     public static function getNavigationLabel() : string { return __( 'Email previews' ); }
