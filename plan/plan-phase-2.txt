@@ -1,0 +1,44 @@
+Phase 2 - Module poleh-core (page d'accueil)
+==============================================
+
+Ce qui a été fait
+-----------------
+
+Mise en place du contenu du module "poleh-core" (package composer local "reaklab/poleh-core", namespace Modules\PoleH\Core\, dossier packages/poleh-core), qui dépend d'abacus-core (phase 1). Uniquement le perimetre "page d'accueil" tel qu'approuve dans le plan - le reste (404, contact, event-index/show, lexique, partner-index, posts-index/show, recherche) reste a faire plus tard.
+
+Modeles et migrations :
+
+- Institution + Institution\Category (tables institutions, institutions_categories) : nom, deux blocs d'adresse (primary_*, hainaut_*, colonnes discretes dont latitude/longitude), booleen show_in_list, logo, excerpt, description, site web, categorie (un seul parent par categorie enfant, via HasParents), slug avec historique, ordre. La categorie expose un accesseur getPluralNameAttribute() qui retombe sur "name" si "plural_name" est vide.
+- Event + Event\Category (tables events, events_categories, pivot events_events_categories) : nom, excerpt, description, informations pratiques, URL info/inscription, adresse structuree + emplacement personnalise (accesseur getDisplayLocationAttribute() qui priorise le personnalise), organisateur (nom + email), date machine + date "humaine" en texte libre, image, slug, prix, plusieurs categories, is_featured (is_poster volontairement pas encore ajoute - n'a de sens qu'avec l'affichage de core/event-index, hors perimetre).
+- Post (table posts) + Post\Category (posts_categories, pivot posts_posts_categories) : version simplifiee du modele de publier, is_published, image (via le trait HasMedia generique), auteur (relation vers App\Models\User).
+- Partner (table partners) : nom, logo, logo_vector (SVG), URL de destination, description, excerpt, slug, ordre. Methode recolored_logo(string $color) qui recolore le SVG en noir/blanc par substitution de l'attribut fill.
+
+Point d'attention technique corrige en cours de route : les relations belongsToMany (Event<->Category, Post<->Category) doivent declarer explicitement leurs colonnes de pivot (event_id/event_category_id, post_id/post_category_id) - la convention par defaut d'Eloquent devine le nom a partir du seul nom de classe (basename), pas du namespace complet, ce qui donnait "category_id" au lieu de "event_category_id"/"post_category_id" et cassait les Select "categories" en admin.
+
+Ressources Filament : une ressource par modele, chacune dans son propre sous-dossier avec une classe "Resource" (convention actee en phase 1), formulaires construits avec les helpers BaseForm (uploader, editor, seo, breadcrumbs, address). Institution et Event utilisent BaseForm::address() (le composant carte/geocodage de la phase 1) ; Event et Post utilisent un Select "categories" en relation multiple avec preload. Institution\Category, Event\Category et Post\Category utilisent le pattern "ManageRecords" (liste + creation/edition en modale) puisque ce sont de simples listes plates.
+
+Page d'accueil :
+
+- Modules\PoleH\Core\Http\Controllers\Index (controleur invocable, herite du Controller de base d'abacus-core) : charge les settings Homepage, les 4 prochains evenements, les 4 derniers posts publies, tous les partenaires.
+- Modules\PoleH\Core\Settings\Homepage + la page Filament associee (Filament/Clusters/Settings/Pages/Homepage.php, dans le cluster Settings d'abacus-core) : adaptee de l'exemple fourni (plan/exemples/slides-homepage), avec l'ajout d'un champ "mobile_image" (absent de l'exemple, demande explicitement dans le plan) et le champ "outbound_link" standardise sur la forme titre/label/destination/classe plutot que l'ancienne forme de l'exemple.
+- Layout resources/views/layouts/website.blade.php (tags SEO, breadcrumb JSON-LD, notice, menus prelude/header/footer/legal) et vue de contenu index/home.blade.php avec toutes les sections dans l'ordre confirme via le Figma : slideshow, 6 blocs (en dur), bloc #plustardjeserai (en dur), statistiques (en dur), evenements a venir (grille simple des 4 prochains - la distinction featured/poster est hors perimetre pour cette phase), dernieres actualites, logos des institutions partenaires, bloc d'aide (en dur). Chaque section est entouree d'une bordure de couleur distincte (pas de design pour l'instant, uniquement du "blocking").
+- Seeders : PolehCoreSeeder (les 4 positions de menu fixes - prelude/header/footer/legal - chacune avec un menu associe) et AdminUserSeeder (dans l'app principale, pas le package) qui cree deux comptes via firstOrCreate (jamais updateOrCreate, pour ne jamais ecraser un mot de passe deja defini) : romain@reaklab.com (permanent) et dev@reaklab.com (modifiable).
+
+Autre correctif notable
+------------------------
+
+Le trait HasComposedSlugs (phase 1) avait un bug decouvert en testant avec de vraies donnees : la verification "la colonne slug_history existe-t-elle" se faisait sur les attributs EN MEMOIRE du modele ($model->getAttributes()) plutot que sur le schema de la table, donc l'historique ne s'alimentait jamais en pratique des qu'on modifiait un enregistrement existant. Corrige pour verifier le schema reel (Schema::hasColumn, mis en cache par table), et le mecanisme n'enregistre desormais l'ancien slug dans l'historique que si le slug a reellement change (wasChanged('slug')), au lieu de re-ajouter le slug courant a chaque sauvegarde.
+
+Verifications effectuees
+-------------------------
+
+- php artisan migrate : les 9 migrations poleh-core passent proprement.
+- php artisan db:seed : les deux seeders (comptes admin + positions de menu) s'executent sans erreur et sont idempotents.
+- Test de fumee (ecrit puis supprime) confirmant 200 OK sur : la page d'accueil publique, et en admin - dashboard, Menu, MenuPosition, les 4 pages de Settings (general/notice/maintenance/homepage), Emails, Institution (liste+creation), Institution\Category, Event (liste+creation), Event\Category, Post (liste+creation), Post\Category, Partner (liste+creation).
+- Verification manuelle via tinker : creation, modification de slug (avec verification que slug_history s'alimente correctement et seulement sur changement reel), soft-delete/restauration sur Institution ; creation d'Event/Post/Partner sans erreur. Donnees de test nettoyees ensuite.
+- php artisan storage:link execute (necessaire pour que les uploads Filament soient accessibles publiquement).
+
+Etat actuel
+-----------
+
+Les phases 1 et 2 telles qu'approuvees dans le plan sont terminees et verifiees de bout en bout. Prochaine etape a definir avec l'utilisateur : quel module/quelle page suivante (404, contact, poleh-ptjs, poleh-help, ou autre) - le fichier plan/plan.txt contient l'integralite du backlog restant.

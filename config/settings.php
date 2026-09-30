@@ -10,7 +10,8 @@ return [
         Abacus\Settings\Email::class,
         Abacus\Settings\General::class,
         Abacus\Settings\Maintenance::class,
-        Abacus\Settings\Notice::class
+        Abacus\Settings\Notice::class,
+        Modules\PoleH\Core\Settings\Homepage::class
     ],
 
     /*
