@@ -39,4 +39,15 @@ trait HasMedia {
 
         return false;
     }
+
+    // A local filesystem path rather than a public URL - color extraction should read the file
+    // directly instead of refetching its own asset over HTTP (fragile behind a CDN or hotlink
+    // protection in production).
+    public function media_source() : ?string {
+        if ( ! empty( $this->media ) && Storage::disk( 'public' )->exists( ltrim( $this->media, '/' ) ) ) {
+            return Storage::disk( 'public' )->path( ltrim( $this->media, '/' ) );
+        }
+
+        return null;
+    }
 }

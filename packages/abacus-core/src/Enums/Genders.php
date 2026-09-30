@@ -4,17 +4,15 @@ namespace Abacus\Enums;
 use Filament\Support\Contracts\HasLabel;
 
 enum Genders : string implements HasLabel {
-    case MALE = 'male';
-    case FEMALE = 'female';
+    case MAN = 'man';
+    case WOMAN = 'woman';
     case OTHER = 'other';
-    case UNDISCLOSED = 'undisclosed';
 
     public function getLabel() : string {
         return match ( $this ) {
-            self::MALE => __( 'Male' ),
-            self::FEMALE => __( 'Female' ),
-            self::OTHER => __( 'Other' ),
-            self::UNDISCLOSED => __( 'Undisclosed' )
+            self::MAN => __( 'A man' ),
+            self::WOMAN => __( 'A woman' ),
+            self::OTHER => __( "I'd rather not say" )
         };
     }
 }
