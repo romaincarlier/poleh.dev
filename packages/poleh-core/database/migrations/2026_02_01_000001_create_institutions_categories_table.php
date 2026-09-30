@@ -15,8 +15,6 @@ return new class extends Migration {
             $table->string( 'slug' );
             $table->string( 'slug_history' )->nullable();
             $table->foreignId( 'parent_id' )->nullable()->constrained( 'institutions_categories' )->nullOnDelete();
-            $table->string( 'breadcrumb_title' )->nullable();
-            $table->string( 'redirect' )->nullable();
             $table->timestamps();
             $table->softDeletes();
         } );

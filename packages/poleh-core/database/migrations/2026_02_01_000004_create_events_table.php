@@ -33,16 +33,6 @@ return new class extends Migration {
             $table->decimal( 'price', 8, 2 )->nullable();
             $table->boolean( 'is_featured' )->default( false );
 
-            $table->string( 'meta_title' )->nullable();
-            $table->string( 'meta_description' )->nullable();
-            $table->string( 'meta_keywords' )->nullable();
-            $table->string( 'meta_robots' )->nullable();
-            $table->string( 'opengraph_title' )->nullable();
-            $table->string( 'opengraph_description' )->nullable();
-            $table->string( 'opengraph_image' )->nullable();
-            $table->string( 'breadcrumb_title' )->nullable();
-            $table->string( 'redirect' )->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         } );

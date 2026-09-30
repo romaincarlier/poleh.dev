@@ -90,8 +90,10 @@ class BaseForm {
         ] )->columns( 2 )->columnSpan( $columns );
     }
 
+    // Backed by the shared polymorphic Abacus\Models\SEO model (morphOne 'seo' relationship) -
+    // use on a model with the HasSeo concern.
     public static function seo() : Component {
-        return Section::make( __( 'SEO' ) )->description( __( 'Search Engine Optimization (SEO)' ) )->schema( [
+        return Section::make( __( 'SEO' ) )->relationship( 'seo' )->description( __( 'Search Engine Optimization (SEO)' ) )->schema( [
             Fieldset::make( __( 'Metadata' ) )->schema( [
                 self::polyglot_input( 'meta_title', __( 'Meta title' ) ),
                 self::polyglot_input( 'meta_description', __( 'Meta description' ) ),
@@ -107,9 +109,11 @@ class BaseForm {
         ] );
     }
 
+    // Backed by the shared polymorphic Abacus\Models\Crumb model (morphOne 'crumb' relationship) -
+    // use on a model with the HasCrumbs concern.
     public static function breadcrumbs() : Component {
-        return Section::make( __( 'Breadcrumb' ) )->schema( [
-            self::polyglot_input( 'breadcrumb_title', __( 'Breadcrumb title' ) ),
+        return Section::make( __( 'Breadcrumb' ) )->relationship( 'crumb' )->schema( [
+            self::polyglot_input( 'crumb_title', __( 'Breadcrumb title' ) ),
             self::link( 'redirect', __( 'Redirect' ) )
         ] )->columnSpan( [ 'lg' => 1 ] );
     }

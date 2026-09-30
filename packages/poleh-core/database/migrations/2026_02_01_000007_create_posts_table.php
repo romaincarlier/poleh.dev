@@ -18,16 +18,6 @@ return new class extends Migration {
             $table->unsignedInteger( 'order' )->default( 0 );
             $table->foreignId( 'author_id' )->nullable()->constrained( 'users' )->nullOnDelete();
 
-            $table->string( 'meta_title' )->nullable();
-            $table->string( 'meta_description' )->nullable();
-            $table->string( 'meta_keywords' )->nullable();
-            $table->string( 'meta_robots' )->nullable();
-            $table->string( 'opengraph_title' )->nullable();
-            $table->string( 'opengraph_description' )->nullable();
-            $table->string( 'opengraph_image' )->nullable();
-            $table->string( 'breadcrumb_title' )->nullable();
-            $table->string( 'redirect' )->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         } );
