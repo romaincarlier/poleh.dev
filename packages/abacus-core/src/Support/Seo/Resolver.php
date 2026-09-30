@@ -17,9 +17,9 @@ class Resolver {
             title: $settings->default_meta_title ?: $settings->site_name,
             description: $settings->default_meta_description,
             robots: 'index, follow',
-            og_title: $settings->default_meta_title ?: $settings->site_name,
-            og_description: $settings->default_meta_description,
-            og_image: $settings->default_meta_image ? asset( 'storage/' . $settings->default_meta_image ) : null,
+            opengraph_title: $settings->default_meta_title ?: $settings->site_name,
+            opengraph_description: $settings->default_meta_description,
+            opengraph_image: $settings->default_meta_image ? asset( 'storage/' . $settings->default_meta_image ) : null,
             url: url()->current()
         );
     }

@@ -28,9 +28,9 @@ trait HasSeo {
             description: $seo?->meta_description ?: Str::limit( strip_tags( $this->excerpt ?? $this->description ?? '' ), 160, '' ),
             keywords: $seo?->meta_keywords,
             robots: $seo?->meta_robots ?: 'index, follow',
-            og_title: $seo?->opengraph_title ?: $seo?->meta_title,
-            og_description: $seo?->opengraph_description ?: $seo?->meta_description,
-            og_image: $seo?->opengraph_image
+            opengraph_title: $seo?->opengraph_title ?: $seo?->meta_title,
+            opengraph_description: $seo?->opengraph_description ?: $seo?->meta_description,
+            opengraph_image: $seo?->opengraph_image
                 ? asset( 'storage/' . $seo->opengraph_image )
                 : ( method_exists( $this, 'media' ) ? $this->media() : null )
         );

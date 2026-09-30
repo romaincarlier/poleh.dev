@@ -7,9 +7,9 @@ class Data {
         public ?string $description = null,
         public ?string $keywords = null,
         public ?string $robots = null,
-        public ?string $og_title = null,
-        public ?string $og_description = null,
-        public ?string $og_image = null,
+        public ?string $opengraph_title = null,
+        public ?string $opengraph_description = null,
+        public ?string $opengraph_image = null,
         public ?string $url = null
     ) {}
 
@@ -19,9 +19,9 @@ class Data {
             description: $data[ 'description' ] ?? null,
             keywords: $data[ 'keywords' ] ?? null,
             robots: $data[ 'robots' ] ?? null,
-            og_title: $data[ 'og_title' ] ?? null,
-            og_description: $data[ 'og_description' ] ?? null,
-            og_image: $data[ 'og_image' ] ?? null,
+            opengraph_title: $data[ 'opengraph_title' ] ?? null,
+            opengraph_description: $data[ 'opengraph_description' ] ?? null,
+            opengraph_image: $data[ 'opengraph_image' ] ?? null,
             url: $data[ 'url' ] ?? null
         );
     }
@@ -33,9 +33,9 @@ class Data {
             description: $this->description ?? $lower_priority->description,
             keywords: $this->keywords ?? $lower_priority->keywords,
             robots: $this->robots ?? $lower_priority->robots,
-            og_title: $this->og_title ?? $lower_priority->og_title,
-            og_description: $this->og_description ?? $lower_priority->og_description,
-            og_image: $this->og_image ?? $lower_priority->og_image,
+            opengraph_title: $this->opengraph_title ?? $lower_priority->opengraph_title,
+            opengraph_description: $this->opengraph_description ?? $lower_priority->opengraph_description,
+            opengraph_image: $this->opengraph_image ?? $lower_priority->opengraph_image,
             url: $this->url ?? $lower_priority->url
         );
     }
