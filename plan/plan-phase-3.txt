@@ -1,0 +1,29 @@
+Phase 3 - core/404 et core/contact
+====================================
+
+Ce qui a été fait
+-----------------
+
+core/404 :
+- Gestion des erreurs via bootstrap/app.php (withExceptions) : rendu personnalise pour les 404 standards (route inconnue) et pour le cas "219 expired" du plan (une URL qui existait avant mais a change de slug - detecte via slug_history, plutot qu'une ressource qui n'a jamais existe). Nouvelle exception Abacus\Http\Exceptions\Expired (HTTP 410 reellement envoye, "219" est juste le nom interne donne par le plan) et une nouvelle methode HasComposedSlugs::find_by_composed_slug_or_fail() a utiliser dans les futurs contrôleurs de detail (event-show, posts-show, etc.) a la place de get_by_composed_slug().
+- Les 6 blocs, la liste des partenaires et le bloc d'aide sont devenus de vrais composants Blade reutilisables (Categories\Portals, Partners\Listing - "List" est un mot reserve en PHP, Call\Help), et la page d'accueil a ete remaniee pour les utiliser aussi (au lieu du HTML en dur qu'elle avait en phase 2).
+- Page de settings Copywriting (section page d'erreur + section page de contenu generique, chacune avec titre/contenu/image/image mobile).
+- Le middleware de maintenance est desormais applique globalement (avant il ne l'etait sur aucune route) et exempte explicitement le panneau d'administration, sinon plus personne ne pourrait se connecter pour le desactiver.
+
+core/contact :
+- Modele Employee (nom, prenom, slug, description multilingue, telephone, email, ordre) avec reordonnancement par glisser-deposer dans Filament.
+- Contrôleur Contact (formulaire classique, pas Livewire) qui envoie un vrai Mailable ContactFormSubmitted - premiere implementation reelle du contrat Previewable d'abacus-core, donc la page Emails de l'admin affiche enfin quelque chose au lieu de "aucun email previsualisable".
+- Composant carte OpenStreetMap/Leaflet (non stylee) fixee aux coordonnees reelles de l'adresse du Pole (Avenue Frere Orban 9, Mons - geocodee via Nominatim pendant le developpement).
+
+Deux vrais bugs trouves et corriges en cours de route
+--------------------------------------------------------
+
+- Les routes chargees via loadRoutesFrom() dans un service provider de package n'heritent PAS automatiquement du groupe de middleware "web" (contrairement au routes/web.php de l'application elle-meme). Consequence concrete : sessions, CSRF et le sac d'erreurs $errors auto-partage ne fonctionnaient pas sur les routes de poleh-core. Corrige en enveloppant explicitement ces routes dans Route::middleware('web')->group(...).
+- Emails::preview() appelait ->render()->toString() sur le rendu d'un MailMessage, mais render() renvoie deja un HtmlString qui n'a pas de methode toString() - corrige avec un simple cast (string).
+
+Verifications effectuees
+-------------------------
+
+Test de fumee complet (ecrit puis supprime) : accueil, contact (affichage + soumission avec Mail::fake()), page 404, et 21 pages d'administration (Menu, MenuPosition, les 6 pages de Settings, Emails, Institution + categorie, Event + categorie, Post + categorie, Partner, Employee) - 26 assertions, toutes au vert.
+
+Note pour la suite : le cache applicatif (driver database) peut occasionnellement servir des donnees de menu perimees pendant une session de developpement tres longue (constate une fois, corrige par un simple cache:clear) - a garder en tete si un comportement etrange apparait sans lien evident avec le code modifie.
