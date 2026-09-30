@@ -1,0 +1,35 @@
+Phase 2b - Correction de la reference source + refonte SEO/breadcrumb
+========================================================================
+
+Contexte
+--------
+
+Le projet source utilise pour l'exploration des phases 1 et 2 etait le mauvais dossier : ~/Herd/publier (un instantane vieux d'un an, 483 Mo) au lieu de ~/Herd/publier-un-livre (le projet reellement actif et a jour, 30 Go). Les deux sont la meme application ("Publier un livre"), mais leur code a significativement evolue entre les deux.
+
+Une reconciliation complete a ete effectuee (4 explorations en parallele) pour comparer chaque piece deja construite avec la version actuelle et corriger ce qui devait l'etre. Bonne nouvelle globale : l'architecture concue independamment (les noms de Concerns HasComposedSlugs/HasParents/HasCrumbs/HasSeo/HasMedia/HasColor, la scission BaseForm/BaseResource/BaseTable, le wrapper d'upload) correspond de tres pres a l'architecture actuelle du projet source, meme si elle avait ete recreee depuis un instantane obsolete.
+
+Corrections appliquees
+-----------------------
+
+- Enum Genders (Abacus\Enums\Genders) : les vraies valeurs de la source sont MAN/WOMAN/OTHER, pas MALE/FEMALE/OTHER/UNDISCLOSED (invente). Corrige.
+- HasColor extrait desormais la couleur dominante depuis un chemin de fichier local (nouvelle methode HasMedia::media_source()) plutot que l'URL publique, pour eviter un refetch HTTP fragile de son propre fichier (probleme documente cote source, derriere un CDN/protection hotlink en production).
+- Refonte du stockage SEO/breadcrumb (decision prise avec l'utilisateur) : bascule d'colonnes plates dupliquees sur chaque table vers deux modeles Eloquent polymorphiques partages, a l'image de la source actuelle :
+  - Abacus\Models\SEO (table `seo`, relation morphOne `seoable`) : meta_title/description/keywords/robots + opengraph_title/description/image, tous traduisibles sauf l'image.
+  - Abacus\Models\Crumb (table `crumbs`, relation morphOne `crumbable`) : crumb_title (traduisible) + redirect (tableau JSON, structure titre/label/destination/classe).
+  - Abacus\Concerns\HasSeo et HasCrumbs exposent desormais seo()/crumb() (relations morphOne) au lieu de lire des colonnes plates.
+  - Abacus\Filament\Forms\BaseForm::seo()/breadcrumbs() utilisent `->relationship('seo')` / `->relationship('crumb')` de Filament (creation/mise a jour automatique de l'enregistrement lie).
+  - Les colonnes SEO/breadcrumb ont ete retirees des migrations institutions_categories/institutions/events/posts (edition en place, tables redeposees puis re-migrees - rien n'etait deploye, aucune donnee reelle perdue).
+
+Confirme comme travail original a poleh (pas d'equivalent dans publier-un-livre, donc rien a "rattraper") :
+- Le concept d'erreur "219 expired" - n'existe nulle part dans la source, a concevoir de zero le moment venu.
+- Le modele Employee - n'existe pas dans la source (la page contact y est un simple formulaire, pas un annuaire d'equipe).
+- Le comportement Polyglot "un seul Group si une seule langue" - n'existe pas non plus dans la version actuelle de Polyglot cote source (qui est devenue un mecanisme a base d'onglets par langue, sans ce cas particulier) - c'est une demande explicite du plan, pas un oubli de port.
+
+Verifications effectuees
+-------------------------
+
+- Les 2 nouvelles migrations (seo, crumbs) + les 4 migrations editees repassent proprement apres redepot des 4 tables concernees (institutions_categories, institutions, events, posts - toutes vides de donnees reelles a ce moment).
+- Test de fumee (ecrit puis supprime) : creation d'une Institution + creation programmatique d'un enregistrement SEO et Crumb lies, verification de la lecture traduite, du repli en cascade (seo_data()->title retombe sur le nom du modele si aucune surcharge SEO n'existe), et chargement reussi de la page d'edition Filament (qui doit donc correctement pre-remplir le formulaire imbrique via la relation).
+- Verification manuelle via tinker sur Event et Post (memes traits HasSeo/HasCrumbs) : comportement identique et correct.
+
+Note pour la suite : `zen-style.md` a ete mis a jour en cours de route avec une regle "Commit Size" (commits plus petits et frequents, un par unite de travail coherente) suite a une demande explicite de l'utilisateur.
