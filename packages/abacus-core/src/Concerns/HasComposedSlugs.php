@@ -1,6 +1,8 @@
 <?php
 namespace Abacus\Concerns;
 
+use Abacus\Http\Exceptions\Expired;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -25,6 +27,31 @@ trait HasComposedSlugs {
         return static::where( 'id', $id )
             ->whereIn( 'slug', [ $slug, $id . '-' . $slug ] )
             ->first();
+    }
+
+    // Prefer this in controllers over get_by_composed_slug() when the address is user-visited -
+    // distinguishes "never existed" (plain 404) from "used to exist, now retired" (a clearer
+    // message for a non-technical visitor) by checking slug_history before giving up.
+    public static function find_by_composed_slug_or_fail( int | string $id, string $slug ) : static {
+        if ( $found = static::get_by_composed_slug( $id, $slug ) ) {
+            return $found;
+        }
+
+        if ( static::slug_previously_existed( $id, $slug ) ) {
+            throw new Expired();
+        }
+
+        abort( 404 );
+    }
+
+    protected static function slug_previously_existed( int | string $id, string $slug ) : bool {
+        $record = static::withTrashed()->find( $id );
+
+        if ( ! $record || empty( $record->slug_history ) ) {
+            return false;
+        }
+
+        return in_array( $slug, json_decode( $record->slug_history, true ) ?: [], true );
     }
 
     public function resolveRouteBinding( $value, $field = null ) : ?static {

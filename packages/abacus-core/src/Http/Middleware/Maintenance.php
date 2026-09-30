@@ -25,6 +25,12 @@ class Maintenance {
             return $next( $request );
         }
 
+        // The admin panel itself must always stay reachable - otherwise nobody could ever log
+        // in to turn maintenance mode back off.
+        if ( $request->is( 'admin', 'admin/*' ) ) {
+            return $next( $request );
+        }
+
         return response()->view( 'abacus::maintenance', [
             'title' => $settings->title[ app()->getLocale() ] ?? reset( $settings->title ) ?: null,
             'description' => $settings->description[ app()->getLocale() ] ?? reset( $settings->description ) ?: null,

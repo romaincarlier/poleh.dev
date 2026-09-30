@@ -7,7 +7,10 @@
     <x-abacus::seo-tags :seo="$seo" />
     <x-abacus::breadcrumbs-json-ld :json="$breadcrumbs_json_ld" />
 
-    @vite( [ 'resources/css/app.css', 'resources/js/app.js' ] )
+    {{-- Degrades gracefully instead of a hard crash if the front-end assets haven't been built yet. --}}
+    @if ( file_exists( public_path( 'build/manifest.json' ) ) || file_exists( public_path( 'hot' ) ) )
+        @vite( [ 'resources/css/app.css', 'resources/js/app.js' ] )
+    @endif
 </head>
 <body>
     @php

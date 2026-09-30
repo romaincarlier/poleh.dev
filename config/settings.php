@@ -11,6 +11,7 @@ return [
         Abacus\Settings\General::class,
         Abacus\Settings\Maintenance::class,
         Abacus\Settings\Notice::class,
+        Modules\PoleH\Core\Settings\Copywriting::class,
         Modules\PoleH\Core\Settings\Homepage::class
     ],
 

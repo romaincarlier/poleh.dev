@@ -1,6 +1,7 @@
 <?php
 namespace Modules\PoleH\Core;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class PolehCoreServiceProvider extends ServiceProvider {
@@ -9,5 +10,7 @@ class PolehCoreServiceProvider extends ServiceProvider {
         $this->loadViewsFrom( __DIR__ . '/../resources/views', 'poleh-core' );
         $this->loadTranslationsFrom( __DIR__ . '/../resources/lang', 'poleh-core' );
         $this->loadRoutesFrom( __DIR__ . '/../routes/web.php' );
+
+        Blade::componentNamespace( 'Modules\\PoleH\\Core\\View\\Components', 'poleh-core' );
     }
 }

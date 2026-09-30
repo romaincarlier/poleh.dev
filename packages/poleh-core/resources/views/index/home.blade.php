@@ -30,22 +30,7 @@
         @endforeach
     </section>
 
-    {{-- 6 portal blocks, hardcoded --}}
-    <section style="border: 4px solid #3b82f6;">
-        @foreach ( [
-            [ 'title' => __( 'Information & guidance' ), 'url' => '#' ],
-            [ 'title' => __( 'Student support' ), 'url' => '#' ],
-            [ 'title' => __( 'Wellbeing & anti-harassment' ), 'url' => '#' ],
-            [ 'title' => __( 'International' ), 'url' => '#' ],
-            [ 'title' => __( 'Sport & culture' ), 'url' => '#' ],
-            [ 'title' => __( 'Education & research' ), 'url' => '#' ]
-        ] as $portal )
-            <a href="{{ $portal[ 'url' ] }}" title="{{ $portal[ 'title' ] }}">
-                <h3>{{ $portal[ 'title' ] }}</h3>
-                <span>{{ __( 'Learn more' ) }}</span>
-            </a>
-        @endforeach
-    </section>
+    <x-poleh-core::categories.portals />
 
     {{-- #plustardjeserai teaser, hardcoded --}}
     <section style="border: 4px solid #22c55e;">
@@ -96,25 +81,7 @@
         @endforelse
     </section>
 
-    {{-- Institutions / partners logos --}}
-    <section style="border: 4px solid #f97316;">
-        <h2>{{ __( 'Partner institutions' ) }}</h2>
+    <x-poleh-core::partners.listing />
 
-        @foreach ( $partners as $partner )
-            <a href="{{ $partner->destination_url ?: '#' }}" title="{{ $partner->name }}">
-                @if ( $partner->logo )
-                    <img src="{{ asset( 'storage/' . $partner->logo ) }}" alt="{{ $partner->name }}">
-                @else
-                    {{ $partner->name }}
-                @endif
-            </a>
-        @endforeach
-    </section>
-
-    {{-- Besoin d'aide CTA, hardcoded --}}
-    <section style="border: 4px solid #14b8a6;">
-        <h2>{{ __( 'Need help? Have a question?' ) }}</h2>
-        <a href="#">{{ __( 'Contact the Pole hainuyer' ) }}</a>
-        <a href="#">{{ __( 'Contact our partner institutions' ) }}</a>
-    </section>
+    <x-poleh-core::call.help />
 @endsection
