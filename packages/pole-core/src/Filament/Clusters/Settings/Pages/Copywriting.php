@@ -46,6 +46,15 @@ class Copywriting extends SettingsPage {
                 ->schema( [
                     BaseForm::polyglot_input( 'lexicon_title', __( 'Title' ) ),
                     BaseForm::polyglot_editor( 'lexicon_content', __( 'Content' ) )
+                ] ),
+
+            Section::make( __( 'Partners page' ) )
+                ->description( __( 'Displayed at the top and bottom of the partners page.' ) )
+                ->schema( [
+                    BaseForm::polyglot_input( 'partner_title', __( 'Title' ) ),
+                    BaseForm::polyglot_editor( 'partner_content', __( 'Content' ) ),
+                    BaseForm::polyglot_input( 'partner_postlude_title', __( 'Postlude title' ) ),
+                    BaseForm::polyglot_editor( 'partner_postlude_content', __( 'Postlude content' ) )
                 ] )
         ] );
     }

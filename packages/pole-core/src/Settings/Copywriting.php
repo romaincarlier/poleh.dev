@@ -17,6 +17,11 @@ class Copywriting extends Settings {
     public array $lexicon_title = [];
     public array $lexicon_content = [];
 
+    public array $partner_title = [];
+    public array $partner_content = [];
+    public array $partner_postlude_title = [];
+    public array $partner_postlude_content = [];
+
     public static function group() : string {
         return 'pole_core_copywriting';
     }
@@ -32,7 +37,11 @@ class Copywriting extends Settings {
             'content_image' => null,
             'content_image_mobile' => null,
             'lexicon_title' => [],
-            'lexicon_content' => []
+            'lexicon_content' => [],
+            'partner_title' => [],
+            'partner_content' => [],
+            'partner_postlude_title' => [],
+            'partner_postlude_content' => []
         ];
     }
 }
