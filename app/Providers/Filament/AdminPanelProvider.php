@@ -29,9 +29,13 @@ class AdminPanelProvider extends PanelProvider {
             ->id( 'admin' )
             ->path( 'admin' )
             ->login()
+            ->brandLogo( asset( 'images/logo/pole-hainuyer-logo.svg' ) )
+            ->brandLogoHeight( '2.5rem' )
             ->colors( [
                 'primary' => Color::Amber
             ] )
+            ->maxContentWidth( 'full' )
+            ->sidebarWidth( '370px' )
             ->discoverResources( in: app_path( 'Filament/Resources' ), for: 'App\\Filament\\Resources' )
             ->discoverPages( in: app_path( 'Filament/Pages' ), for: 'App\\Filament\\Pages' )
             ->pages( [
