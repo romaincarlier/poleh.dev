@@ -6,6 +6,7 @@ use Modules\Pole\Core\Http\Controllers\Index;
 use Modules\Pole\Core\Http\Controllers\Lexicon;
 use Modules\Pole\Core\Http\Controllers\Partner;
 use Modules\Pole\Core\Http\Controllers\Post;
+use Modules\Pole\Core\Http\Controllers\Search;
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,6 @@ Route::middleware( 'web' )->group( function () : void {
 
     Route::get( '/actualites', Post\Index::class )->name( 'post.index' );
     Route::get( '/actualites/{id}/{slug?}', Post\Show::class )->where( 'id', '[0-9]+' )->name( 'post.show' );
+
+    Route::get( '/recherche', Search\Index::class )->name( 'search.index' );
 } );

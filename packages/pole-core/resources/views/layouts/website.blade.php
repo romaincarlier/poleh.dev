@@ -22,6 +22,7 @@
 
     <x-abacus::menu position="prelude" />
     <x-abacus::menu position="header" />
+    <x-pole-core::search.form />
 
     <main>
         @yield( 'content' )

@@ -9,6 +9,7 @@ use Abacus\Support\Discovery;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Fieldset;
@@ -46,6 +47,14 @@ class BaseForm {
     public static function polyglot_editor( string $name, string $label, ?string $helper_text = null ) : Polyglot {
         $field = Polyglot::make( $name )
             ->receiver( RichEditor::make( $name )->toolbarButtons( self::format() )->customBlocks( Discovery::classes_in( config( 'abacus.block_paths' ), Block::class ) ) )
+            ->label( $label );
+
+        return $helper_text ? $field->helperText( $helper_text ) : $field;
+    }
+
+    public static function polyglot_tags( string $name, string $label, ?string $helper_text = null ) : Polyglot {
+        $field = Polyglot::make( $name )
+            ->receiver( TagsInput::make( $name ) )
             ->label( $label );
 
         return $helper_text ? $field->helperText( $helper_text ) : $field;

@@ -12,7 +12,8 @@ return [
         Abacus\Settings\Maintenance::class,
         Abacus\Settings\Notice::class,
         Modules\Pole\Core\Settings\Copywriting::class,
-        Modules\Pole\Core\Settings\Homepage::class
+        Modules\Pole\Core\Settings\Homepage::class,
+        Modules\Pole\Core\Settings\Search::class
     ],
 
     /*
