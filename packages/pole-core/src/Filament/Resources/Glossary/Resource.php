@@ -28,6 +28,7 @@ class Resource extends BaseResource {
     public static function form( Schema $schema ) : Schema {
         return $schema->components( [
             BaseForm::polyglot_input( 'name', __( 'Name' ) ),
+            BaseForm::polyglot_input( 'slug', __( 'Slug' ) ),
 
             TextInput::make( 'order' )->label( __( 'Order' ) )->numeric()->default( 0 ),
 
