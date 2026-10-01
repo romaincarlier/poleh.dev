@@ -1,6 +1,7 @@
 <?php
 namespace Abacus\Filament\Forms;
 
+use Abacus\Enums\Illustrations;
 use Abacus\Filament\Blocks\Block;
 use Abacus\Filament\Components\Address;
 use Abacus\Filament\Components\Polyglot;
@@ -9,6 +10,7 @@ use Abacus\Support\Discovery;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
@@ -129,6 +131,19 @@ class BaseForm {
 
     public static function address( string $name ) : Component {
         return Address::make( $name );
+    }
+
+    // Shared between every module that needs a per-section/category illustration picker -
+    // renders a small SVG preview to the left of each option's name.
+    public static function illustration( string $name ) : Select {
+        return Select::make( $name )
+            ->label( __( 'Illustration' ) )
+            ->options( collect( Illustrations::cases() )->mapWithKeys( fn ( Illustrations $case ) => [
+                $case->value => '<img src="' . asset( $case->svg_path() ) . '" style="height: 1.25rem; width: 1.25rem; display: inline-block; vertical-align: middle; margin-right: .5rem;" alt=""> ' . $case->getLabel()
+            ] ) )
+            ->allowHtml()
+            ->native( false )
+            ->searchable();
     }
 
     public static function unit( float | int $value, string $unit = '€', ?int $precision = null ) : string {
