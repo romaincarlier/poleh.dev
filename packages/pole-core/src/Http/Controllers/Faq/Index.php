@@ -19,6 +19,10 @@ class Index extends Controller {
     }
 
     protected function glossaries() : Collection {
-        return Glossary::withCount( 'questions' )->orderBy( 'order' )->get();
+        // A glossary without a slug for the current locale can't generate a faq.show URL - skip
+        // it rather than 500 the whole index for every visitor over one incomplete record.
+        return Glossary::withCount( 'questions' )->orderBy( 'order' )->get()
+            ->filter( fn ( Glossary $glossary ) => filled( $glossary->slug ) )
+            ->values();
     }
 }
