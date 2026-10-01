@@ -15,6 +15,10 @@
             "url": "packages/pole-core"
         },
         {
+            "type": "path",
+            "url": "packages/pole-ptjs"
+        },
+        {
             "type": "composer",
             "url": "https://satis.ralphjsmit.com"
         },
@@ -28,7 +32,8 @@
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "reaklab/abacus-core": "@dev",
-        "reaklab/pole-core": "@dev"
+        "reaklab/pole-core": "@dev",
+        "reaklab/pole-ptjs": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

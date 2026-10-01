@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c27cf0838673ce9e948158fbf5524014",
+    "content-hash": "c7ff831dbd043441784115a113f12f96",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5789,6 +5789,33 @@
                 "proprietary"
             ],
             "description": "Pole hainuyer - core content module (home page, institutions, events, posts, partners)",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "reaklab/pole-ptjs",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/pole-ptjs",
+                "reference": "80abd4b25d390ee6b27a7094bfe0b5bc5a9a3cc5"
+            },
+            "require": {
+                "php": "^8.3",
+                "reaklab/abacus-core": "*",
+                "reaklab/pole-core": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Pole\\PTJS\\": "src/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Pole hainuyer - \"Plus tard je serai\" vocational orientation module",
             "transport-options": {
                 "relative": true
             }
@@ -13232,7 +13259,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "reaklab/abacus-core": 20,
-        "reaklab/pole-core": 20
+        "reaklab/pole-core": 20,
+        "reaklab/pole-ptjs": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

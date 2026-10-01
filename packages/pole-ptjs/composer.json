@@ -1,0 +1,16 @@
+{
+    "name": "reaklab/pole-ptjs",
+    "description": "Pole hainuyer - \"Plus tard je serai\" vocational orientation module",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Pole\\PTJS\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "reaklab/abacus-core": "*",
+        "reaklab/pole-core": "*"
+    }
+}
