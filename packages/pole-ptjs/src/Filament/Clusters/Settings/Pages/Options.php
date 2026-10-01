@@ -15,6 +15,7 @@ class Options extends SettingsPage {
     protected static string $settings = PTJSSettings::class;
     protected static ?string $cluster = SettingsCluster::class;
     protected static ?int $navigationSort = 20;
+    protected static ?string $slug = 'ptjs-options';
 
     protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-briefcase';
 

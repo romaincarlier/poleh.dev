@@ -14,7 +14,8 @@ return [
         Modules\Pole\Core\Settings\Copywriting::class,
         Modules\Pole\Core\Settings\Homepage::class,
         Modules\Pole\Core\Settings\Search::class,
-        Modules\Pole\PTJS\Settings\Settings::class
+        Modules\Pole\PTJS\Settings\Settings::class,
+        Modules\Pole\Help\Settings\Settings::class
     ],
 
     /*

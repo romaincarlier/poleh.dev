@@ -22,6 +22,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Abacus\AbacusPlugin;
 use Modules\Pole\Core\PoleCorePlugin;
 use Modules\Pole\PTJS\PTJSPlugin;
+use Modules\Pole\Help\HelpPlugin;
 
 class AdminPanelProvider extends PanelProvider {
     public function panel( Panel $panel ) : Panel {
@@ -50,7 +51,8 @@ class AdminPanelProvider extends PanelProvider {
             ->plugins( [
                 AbacusPlugin::make(),
                 PoleCorePlugin::make(),
-                PTJSPlugin::make()
+                PTJSPlugin::make(),
+                HelpPlugin::make()
             ] )
             ->middleware( [
                 EncryptCookies::class,

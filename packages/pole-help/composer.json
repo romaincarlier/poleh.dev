@@ -1,0 +1,16 @@
+{
+    "name": "reaklab/pole-help",
+    "description": "Pole hainuyer - \"Aide & Precarite\" resources module",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Modules\\Pole\\Help\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "reaklab/abacus-core": "*",
+        "reaklab/pole-core": "*"
+    }
+}

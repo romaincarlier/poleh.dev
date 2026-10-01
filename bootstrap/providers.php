@@ -6,4 +6,5 @@ return [
     Abacus\AbacusServiceProvider::class,
     Modules\Pole\Core\PoleCoreServiceProvider::class,
     Modules\Pole\PTJS\PTJSServiceProvider::class,
+    Modules\Pole\Help\HelpServiceProvider::class,
 ];
