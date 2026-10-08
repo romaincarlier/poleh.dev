@@ -1,0 +1,154 @@
+Nous allons travailler sur un projet dont la structure de code est inspirée du dossier "~/Herd/publier-un-livre", que tu peux analyser.
+Ce qu'il faut en retenir est que nous allons utiliser des classes de base pour tous les éléments communs : Modèle, Controller, Helper, Block Filament, Resource Filament + Form / Table / Pages List, Edit, Create de base.
+
+Pour l'instant on va travailler sur l'administration, et j'essaie de te donner le plus d'instructions ci-dessous, mais tu disposes de toutes les vues exportées du figma dans plan/figma pour inférer / comprendre par toi-même des choses supplémentaires.
+J'attache aussi le fichier plan/offre.md qui est la version markdown d'une offre faite par notre agence au client. Tu y trouveras le nom du client et des informations techniques à partir de "Spécifications techniques globales", tu peux bien sûr exclure les informations sur une version WordPress.
+
+Ce projet n'est pas multilingue on va quand même prévoir que ça puisse être le cas, tu devras juste faire varier les champs Poyglot et les fonctions helpers pour qu'elles contiennent un Group Filament et pas des Tabs par langue quand il y a une seule langue.
+On va par contre travailler avec Laravel, Filament, Mix, l'uploader de Ralph J Smit.
+Côté code, lis zen-style.md, ça contient déjà pas mal de règles à utiliser.
+Quand je dis "projet source" je veux parler de "publier".
+
+—
+
+Depuis le projet "publier" veille à récupérer ces éléments en adaptant, nettoyant et proposant quelque chose de flexible et évolutif :
+- Les Concerns (HasSeo, HasCrumbs, HasComposedSlugs, HasParents, HasColor, HasMedia)
+- Le Controller de base mais j'aimerais que tu me proposes une version plus robuste de gérer la cascade "metadonnées spécifiées sur le modèle" > "métadonnées spécifiées sur le contrôleur" > "métadonnées générales" et que tout soit output dans le layout.
+- Les Menus (Gestion des positions, des menus, des associations position/menu, ajout de différents éléments par type + liste préféfinies de route, gestion du cache)
+Côté Filament :
+- Les actions suivantes / précédentes pour naviguer dans les resources
+- Les blocs, donc les éditeurs devront charger automatiquement tous les blocs qui se trouvent dans /app/Filament/Blocks. On utilise une notation pour les templates qui les met dans /resources/views/filament/block/nom-du-bloc/{render/preview}.blade.php.
+- Le cluster de settings (et installe spatie-settings), et tu importeras ce qui te semble utile depuis le projet source (ce n'est pas un site e-commerce donc pas de connexion avec des tiers Dropbox / Falco / Horus / MultiSafePay / Sendcloud).
+- Les classes de base de Form, Resource, Table que tu peux renommer / déplacer, mais garde les améliorations "quality of life", du style les boutons "créer" et "retour à la liste" dans les entêtes de pages.
+- Le composant polyglot (et installe spatie-translatable).
+- Les Enums User (Countries, Genders)
+- La gestion de la mise du site en maintenance
+- La gestion des Notices.
+- Le middleware de maintenance.≤`
+- La page de gestion des e-mails, mais peut-être une méthode plus claire pour en faire la liste ?
+- Les breadcrumbs partout. Chaque action de chaque contrôleur doit déclarer des infos SEO, un breadcrumb le plus pertinent possible (qui doit aussi avoir un schéma schema.org)
+
+Si ça te semble pertinent, tu peux déplacer ceci dans un modules "abacus-core", et le namespace est donc Abacus\
+Le système de modules à utiliser est décrit sur https://filamentphp.com/docs/5.x/advanced/modular-architecture
+Dans ce cas, les autres modules que tu créeras doivent charger et référencer Abacus, et tous les modules qui parlent du pole hainuyer (le client) commenceront par poleh-
+
+Crée une classe console qui permet d'insérer les settings manquants de TOUTES les classes de settings avec leur valeur par défaut, on ne va PAS utiliser des migrations pour les settings.
+Tant que je ne t'ai pas dit le contraire, édite tes migrations et tes classes plutôt que créer des nouvelles.
+Sur tous les modèles, on implémente SoftDeletes.
+Quand je te dis que des choses sont hardcodées, traduis les tout de même en anglais.
+
+N'oublie pas les champs translatable, de manière générale sur le projet.
+N'oublie pas de créer un seeder de comptes administrateurs, un pour moi qui ne changera jamais, un pour toi que tu peux modifier pour tester.
+N'écrit pas de tests unitaires pour le moment.
+Ne fais pas de design, mais tu peux "blocker" des éléments sur les pages en mettant des bordures de couleur.
+On s'occupera ensemble du design dans une mission ultérieure.
+En base de données et dans le code, tout est en anglais.
+Quand il y a des uploads de fichiers, mets les dans des dossiers pertinents (uploads/posts) et avec des noms de fichiers pertinents (id-slug.png);
+
+—
+
+NE MODIFIE JAMAIS LE PROJET SOURCE.
+NE FAIS JAMAIS TOI MEME UN MIGRATE-FRESH OU DES GROSSES SUPPRESSIONS.
+N'INTERAGIS JAMAIS AVEC UNE AUTRE BASE DE DONNEES QUE CELLE DU .env.
+
+—
+
+Allons-y avec l'analyse des vues.
+core/home :
+- On va créer un module poleh-core
+- Tu devras donc avoir un controleur "Index" qui utilise un layout "website" et hérite d'une classe commune "Controller".
+- On va ajouter une page de settings qui permette de gérer les slides en haut de page. Un exemple est dans /plan/exemples/slides-homepage. Une slide est définie par une image, une image mobile (fallback vers l'image classique à l'affichage), un titre, un sous-titre et une action de type lien (un lien est un champ link dans le projet source, à savoir décrit par un titre, un label, une destination, une classe).
+- Les 6 blocs, le bloc" plus tard je serai", les statistiques sont stockées en dur / hardcodé.
+- Un modèle "Institution" ainsi qu'un modèle "Institution\Category" devront être créés (tables institutions, institutions_categories, un seul parent pour chaque enfant).
+Une institution a un nom, une adresse principale (voir champ ci-dessous), une adresse en hainaut, un booléen "afficher en liste", un logo, un excerpt, une description, un site web, une catégorie, un slug (récupère la méthode pour régénérer le slug du projet source) et un ordre.
+Une catégorie d'institutions a un nom, un ordre, une description, un excerpt, un nom au pluriel (facultatif, quand on essaie de récupérer cet attribut sur le modèle on fallback vers le nom), un slug.
+Pour les adresses, on va créer dans reaklab-core un nouveau composant Filament qui affiche sur la gauche les champs "rue", "numéro", "ville", "code postal", "pays" (enum countries), latitude et longitude mais qui sont disabled à l'édition. Sur la droite, on a une carte openstreetmap, avec un pin qui peut être déplacé, déplacer le pin met à jour deux champs de latitude / longitude, et un bouton "Localiser" sous les champs d'adresse permet de geocoder et placer le pin sur la latlng correspondant à l'adresse.
+- Mets en backlog la création d'un composant (pas livewire, juste composant) "next-events" (attention, dans ce cas tu crée Events\Next et pas NextEvent pour la classe)
+- Mets en backlog la création d'un composant (pas livewire, juste composant) "latest-posts" (attention, dans ce cas tu crée Posts\Latest et pas LatestPost pour la classe). On utilise une partielle post/card/classic.blade.php pour les petits affichages.
+- On va créer un modèle "Post", base toi sur le projet source, importe aussi le contrôleur et les vues mais simplifie au maximum le markup.
+- On va créer un modèle "Evenements" (events), "Event Category" (tables events_categories et events_events_categories). Un événement est décrit par un nom, un excerpt, une description, une section informations pratiques, une URL d'informations, une URL d'inscription, une adresse (voir bloc d'adresse décrit), un emplacement sur mesure (pour pouvoir y mettre l'information "Campus de l'UMONS" plutôt qu'une adresse), un nom d'organisateur + un e-mail de contact pour l'organisateur, une date (pour placer dans les calendriers) et une date "humaine" (du x au Y, ou "tout le mois de juillet"), une image, un slug, un prix, et une ou plusieurs catégories (utilise un ModalSelect).
+— On va créer un modèle "Partenaires" (classe Partner, table partners) qui est définie par un nom, un logo, un logo vectoriel (créer aussi une méthode helper qui permet d'afficher un SVG en noir ou en blanc), une URL de destination, une description, un excerpt, un slug.
+- Le bloc "Vous avez besoin d'aide" sera hardcodé.
+- Quatre position de menu : Prelude, Header, Footer, Legal.
+- Importe l'entièreté du concept de pages vers les 
+- Crée un contrôleur "Contact" avec un formulaire de contact, base toi sur le projet source.
+
+core/404 :
+- Implémente un middleware de gestion des pages d'erreur y compris 219 expired qui redirige vers cette page (dans le cas d'une erreur 219 flashe une information qui le précise pour un utilisateur NON TECHNIQUE)
+- Comme tu le vois, on utilise les mêmes partielles, on va donc créer des composants (pas livewire) pour "Categories\Portals" (categories-portals) (les 6 blocs du dessus), "Partners\List" (partners-list) (partie "institutions partenaires") et "Call\Help" pour "vous avez besoin d'aide" en bas.
+- Vérifie qu'on a une page de settings "Copywriting" (copie les concepts du projet source) qui permet de configurer le titre et le contenu de la page d'erreur et de la page de contenu. Permets aussi de préciser des images et images mobiles pour les entêtes de ces pages.
+- Importe la configuration des emails depuis le projet source, vérifie qu'on a bien une possibilité de désactiver tous les emails partants.
+
+core/contact :
+- On va créer un modèle "Employee". Un employé est défini par un nom, prénom, un slug, une description (multilingue, c'est le seul champ qui l'est), un numéro de téléphone, une adresse e-mail et un ordre. Dans Filament, permets de réorganiser les éléments par drag and drop.
+- On va ajouter un composant (pas livewire, classique) qui affiche une carte openstreetmap (ne la style pas) a une latitude / longitude qui correspond à l'adresse du pole (Avenue Frere Orban, 9 à 7000 Mons Belgique).
+
+core/event-index :
+- On ajoute la possibilité de mettre en avant un événement (is_featured, pas unique) (case à cocher) et à "mettre en poster" (is_poster, unique entre les différents evenements). Sur cette vue, si on a un is_poster il est premier, sinon on a deux types de cartes :
+- event/card/classic.blade.php qui affiche la date en trois parties (13 / Mai / 2026), le titre, soit la ville de l'adresse soit l'emplacement perso, le titre et un lien vers la page de détails.
+- event/card/featured.blade.php si l'événement est featured, qui affiche les mêmes choses mais avec une image en fond.
+- On ajoute la pagination
+- On ajoute les composants "latest-news", "partners-list", "
+
+core/event-show :
+- En haut de page on affiche la date en trois partie, le titre, l'excerpt dans un bloc avec l'image de fond, puis une zone d'information contenant les dates (soit la date soit la période humaine), l'adresse, l'organisateur, le prix, et des boutons "Inscription", "Plus d'informations" et "Contacter l'organisateur" si ces informations sont remplies, puis une zone contenant un texte RTE avec la description, puis les composants "next-events" (avec un titre sur mesure), "latest-news", "partners-list", "help-call".
+
+core/lexicon-index :
+- Ajoute une section dans les settings Copywriting qui permet de définir le haut de la page index du contrôleur "Definitions".
+- On crée un modèle "Definition". Une définition a un terme, une description, un acronyme.
+- On en profite pour importer tout le concept de "FAQ" du projet source.
+- La vue index du controleur Definitions affiche donc en haut de page l'entete sur base de la page de settings puis une liste de type "accordéon" avec une entrée par lettre de l'alphabet qui contient des définitions. Les titres contiennent les acronymes dans des parenthèses (dans un span), puis on ajoute les blocs "partners-list" et "help-call"
+
+core/partner-index :
+- Ajoute une section dans les settings Copywriting qui permet de définir le haut de la page index du contrôleur "Partners" ainsi qu'une zone postlude à afficher après la liste.
+- La vue index du controleur Partners affiche les catégories de partenaires dans l'ordre avec leur titre et excerpt, et puis un accordéon avec pour chaque partenaire son logo, son nom et dans le dépliant de l'accordéon le siège social, l'adresse en hainaut, la collaboration, l'email, le numéro de téléphone. Ensuite on a le postlude, le bloc partners-list et help-call.
+
+core/posts-index :
+- On affiche des cartes "posts/card/large.blade.php" qui contient le titre, la description courte, un bouton "lire la suite" et l'image si elle existe. Ensuite, pagination, "partners-list", "help-call" et le footer.
+
+core/posts-show :
+- Ajoute un concept "Post Tags" (modele Post\Tag, posts_tags et posts_posts_tags, association 1 à N comme les catégories). Ajoute la possibilité d'associer plusieurs tags à une actualité dans PostForm.
+- La vue "show" du contrôleur "posts" affiche une entête avec la date de publication, les tags (pas de liens pour le moment), le titre, l'introduction. Ensuite, Zone de texte RTE avec le contenu dans la langue actuelle, composants "latest-news" (avec un titre sur mesure) "partners-list", "help-call" et le footer.
+
+core/search-open :
+- Dans l'administration, ajoute une page de settings (ou dans une page existante) un champ de type tag list qui permet de définir des recherches pré-définies (multilingue)
+- Dans cette vue hors-canvas (crée un composant, pas livewire mais classique) on affiche les termes prédéfinis de la langue actuelle qui déclenchent une recherche avec ce terme.
+- On récupère l'ensemble du concept de recherche (contrôleur, méthodes, vues, filtres) depuis le projet source, et on le modernise / uniformise.
+
+————
+
+Plus tard je serai (dossier plan/figma/plus-tard-je-serai)
+
+- Ceci doit être dans un module "poleh-ptjs", crée le.
+- On va ajouter une page de configuration qui permet de définir les options de PTJS.
+- On ajoute un controleur de base "Modules\PoleH\PTJS\Controllers\Controller.php" qui hérite du Controleur de Core pour l'étendre (et notamment ajouter un crumb "PTJS" pour toutes les pages)
+
+ptjs-home :
+- La partie du haut (titre, breadcrumb, vidéo) est hardcodée.
+- On crée un modèle "Section". Une section est définie par un nom, un extrait, une description, un slug, une image de fond une illustration (voir ci-dessous), un ordre, une liste de métiers (éditeur), une liste d'intervenants (éditeur), une URL de vidéo Youtube (on vérifie à l'update) et des chapitres. Les chapitres sont un répéteur filament qui permet de définir un titre de chapitre (multilingue), une description, un timestamp en secondes.
+- Pour les illustrations, on crée un nouveau composant qui permet de sélectionner dans une liste déroulante remplie depuis une ENUM "Illustrations" et affiche une preview du SVG de l'illustration sur la gauche de son nom.
+- Sur cette page, on affiche donc l'entête du site, l'entête PTJS, la liste des sections dans l'ordre avec leur titre, leur extrait, leur illustration et un bouton "découvrir". N'oublie pas d'avoir un title attribute sur le lien. Ensuite, composants "partners-list", "help-call" et le pied de page.
+
+ptjs-section :
+- Sur la section on affiche le breadcrumb, le titre, l'introduction, la liste des métiers sur l'image de fond, la vidéo youtube (avec une image preview, ne pas charger youtube directement) et la liste des chapitres. Quand on clique sur un chapitre on avance à son timestamp (tu as un exemple fonctionnel ici : https://www.polehainuyer.be/plustardjeserai/paramedical/) et on redémarre la vidéo. Ensuite, dessous, un composant "sections-list" (Sections/List) qui contient du code hardcodé, les blocs "partners-list", "help-call" et le pied de page.
+
+—————
+
+Aide & Précarité (dossier plan/figma/aide-et-precarite)
+
+- Ceci doit être dans un module "poleh-help", crée le.
+- On va ajouter une page de configuration qui permet de définir les options de aide-et-precarite, dont l'introduction de la page d'accueil et l'URL de la vidéo.
+- On ajoute un controleur de base "Modules\PoleH\Help\Controllers\Controller.php" qui hérite du Controleur de Core pour l'étendre (et notamment ajouter un crumb "Aide & Précarité" pour toutes les pages)
+
+aide-et-precarite-home :
+- La partie du haut (titre, breadcrumb, vidéo) est à moitié hardcodée et récupérée des pages de settings
+- On crée un modèle "Resource\Category" (resources_categories). Pour l'instant pas de modèle "Resource" mais on ne l'exclut pas pour la suite.
+Une catégorie de resources est définie par un nom, un extrait, une description, un slug, une image de fond une illustration (voir ci-dessous), un ordre, et une éventuelle resource parente.
+Une catégorie de ressources a aussi une liste de ressources dans un répéteur qui 
+Quand on accède à une page de catégorie si elle n'est pas de niveau 1 (pas de parent) ça donnera une 404.
+Les illustrations sont celles de l'autre module, même composant filament.
+Dans l'admin filament, affiche "Resources" pas "Catégories de resources".
+- Sur cette page, on affiche donc l'entête du site, l'entête aide-et-precarite, la liste des catégories de premier niveau dans l'ordre avec leur titre, leur extrait, leur illustration et un bouton "découvrir". N'oublie pas d'avoir un title attribute sur le lien. Ensuite, composants "sections-list", "partners-list", "help-call" et le pied de page.
+
+aide-et-precarite-section :
+- Sur la section on affiche le breadcrumb, le titre, l'introduction, la liste des catégories enfant de la catégorie visitée et pour chaque sous-catégories le nombre de ressources + la liste des ressources qu'elle contient
